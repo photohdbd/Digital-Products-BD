@@ -121,12 +121,27 @@ const HomePage: React.FC = () => {
                 <section>
                     <h2 className="text-2xl md:text-3xl font-bold text-center text-white mb-8">Reviews</h2>
                     <p className="text-center text-gray-400 mb-12 -mt-4">What our clients say about us?</p>
-                    <div className="max-w-xl mx-auto relative h-52">
-                         {MOCK_REVIEWS.map((review, index) => (
-                             <div key={review.id} className={`absolute w-full transition-opacity duration-500 ease-in-out ${index === currentReview ? 'opacity-100' : 'opacity-0'}`}>
-                                <ReviewCard review={review} />
-                             </div>
-                         ))}
+                    <div className="max-w-xl mx-auto overflow-hidden relative pb-8">
+                        <div 
+                            className="flex transition-transform duration-500 ease-in-out"
+                            style={{ transform: `translateX(-${currentReview * 100}%)` }}
+                        >
+                            {MOCK_REVIEWS.map((review) => (
+                                <div key={review.id} className="w-full flex-shrink-0">
+                                    <ReviewCard review={review} />
+                                </div>
+                            ))}
+                        </div>
+                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 flex space-x-2">
+                            {MOCK_REVIEWS.map((_, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => setCurrentReview(index)}
+                                    className={`h-2 rounded-full transition-all duration-300 ${currentReview === index ? 'w-5 bg-primary' : 'w-2 bg-base-300 hover:bg-primary/50'}`}
+                                    aria-label={`Go to review ${index + 1}`}
+                                />
+                            ))}
+                        </div>
                     </div>
                 </section>
 

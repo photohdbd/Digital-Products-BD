@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "build": "echo \"Build not required, site is served statically from root.\""
   },
   "devDependencies": {
     "patch-package": "^8.0.0"

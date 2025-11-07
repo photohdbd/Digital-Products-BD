@@ -36,16 +36,16 @@ const AdminProductForm: React.FC<AdminProductFormProps> = ({ product, onSave }) 
     }
   }, [product]);
 
-  // FIX: Rewrote the change handler to correctly and safely handle different input types,
-  // particularly checkboxes. The previous implementation had a typing issue that prevented
-  // safe access to the `checked` property.
+  // FIX: The `handleChange` function was causing a TypeScript error because it was trying
+  // to access the `checked` property on a union type where it doesn't always exist.
+  // This has been fixed by using an `instanceof` type guard to ensure `checked` is
+  // only accessed on an HTMLInputElement of type 'checkbox'.
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name } = e.target;
-    
-    if (e.target instanceof HTMLInputElement && e.target.type === 'checkbox') {
-        setFormData(prev => ({ ...prev, [name]: e.target.checked }));
+    const target = e.target;
+    if (target instanceof HTMLInputElement && target.type === 'checkbox') {
+      setFormData(prev => ({ ...prev, [target.name]: target.checked }));
     } else {
-        setFormData(prev => ({ ...prev, [name]: e.target.value }));
+      setFormData(prev => ({ ...prev, [target.name]: target.value }));
     }
   };
 

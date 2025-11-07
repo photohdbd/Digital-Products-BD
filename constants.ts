@@ -1,8 +1,8 @@
-import { Product, Review, User, SpecialOffer } from './types';
+import { Product, Review, User, SpecialOffer, HeroSlide } from './types';
 
-export const HERO_SLIDES = [
+export const MOCK_HERO_SLIDES: HeroSlide[] = [
   {
-    id: 1,
+    id: 'slide-1',
     image: 'https://i.imgur.com/lZ2xJ2d.png',
     title: 'Unlock Your Creative Potential',
     subtitle: 'Get access to premium digital tools and assets with up to 20% off!',
@@ -10,7 +10,7 @@ export const HERO_SLIDES = [
     buttonLink: '/shop',
   },
   {
-    id: 2,
+    id: 'slide-2',
     image: 'https://i.imgur.com/9aE0VdD.png',
     title: 'AI-Powered Video Creation with Veo 3',
     subtitle: 'Transform your ideas into stunning cinematic videos effortlessly.',
@@ -18,7 +18,7 @@ export const HERO_SLIDES = [
     buttonLink: '/product/prod-veo3',
   },
   {
-    id: 3,
+    id: 'slide-3',
     image: 'https://i.imgur.com/yX5zB5j.png',
     title: 'Exclusive Graphics Bundles',
     subtitle: 'Elevate your designs with our curated collection of professional tools.',

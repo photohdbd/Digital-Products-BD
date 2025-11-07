@@ -89,3 +89,12 @@ export interface SpecialOffer {
     image: string;
     link: string;
 }
+
+export interface HeroSlide {
+    id: string;
+    image: string;
+    title: string;
+    subtitle: string;
+    buttonText: string;
+    buttonLink: string;
+}

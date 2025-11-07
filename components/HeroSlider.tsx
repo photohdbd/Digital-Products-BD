@@ -1,19 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { HERO_SLIDES } from '../constants';
+import { AppContext } from '../context/AppContext';
 
 const HeroSlider: React.FC = () => {
+    const context = useContext(AppContext);
     const [currentSlide, setCurrentSlide] = useState(0);
 
+    const heroSlides = context?.heroSlides || [];
+
     useEffect(() => {
+        if (heroSlides.length === 0) return;
         const timer = setInterval(() => {
-            setCurrentSlide((prev) => (prev === HERO_SLIDES.length - 1 ? 0 : prev + 1));
-        }, 3000); // Changed to 3s for a better user experience
+            setCurrentSlide((prev) => (prev === heroSlides.length - 1 ? 0 : prev + 1));
+        }, 3000);
 
         return () => clearInterval(timer);
-    }, []);
+    }, [heroSlides.length]);
 
-    const slide = HERO_SLIDES[currentSlide];
+    if (heroSlides.length === 0) {
+        return (
+            <div className="relative w-full h-[60vh] max-h-[500px] bg-base-200 flex items-center justify-center text-white">
+                <p>No slides have been configured.</p>
+            </div>
+        );
+    }
+
+    const slide = heroSlides[currentSlide];
 
     return (
         <div className="relative w-full h-[60vh] max-h-[500px] bg-base-200 overflow-hidden">
@@ -21,7 +33,7 @@ const HeroSlider: React.FC = () => {
                 className="absolute inset-0 flex transition-transform duration-700 ease-in-out"
                 style={{ transform: `translateX(-${currentSlide * 100}%)` }}
             >
-                {HERO_SLIDES.map((s) => (
+                {heroSlides.map((s) => (
                     <div key={s.id} className="w-full flex-shrink-0 h-full relative">
                         <img src={s.image} alt={s.title} className="w-full h-full object-cover" />
                         <div className="absolute inset-0 bg-black bg-opacity-40" />
@@ -44,7 +56,7 @@ const HeroSlider: React.FC = () => {
                 </Link>
             </div>
              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex space-x-2">
-                {HERO_SLIDES.map((_, index) => (
+                {heroSlides.map((_, index) => (
                     <button
                         key={index}
                         onClick={() => setCurrentSlide(index)}

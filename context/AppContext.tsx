@@ -1,6 +1,6 @@
 import React, { createContext, useState, ReactNode, useEffect } from 'react';
-import { Product, CartItem, Order, OrderStatus, CustomerDetails, PaymentMethod, ContactMessage, User, SpecialOffer } from '../types';
-import { MOCK_PRODUCTS, MOCK_USERS, MOCK_SPECIAL_OFFERS } from '../constants';
+import { Product, CartItem, Order, OrderStatus, CustomerDetails, PaymentMethod, ContactMessage, User, SpecialOffer, HeroSlide } from '../types';
+import { MOCK_PRODUCTS, MOCK_USERS, MOCK_SPECIAL_OFFERS, MOCK_HERO_SLIDES } from '../constants';
 
 // Helper to get initial state from localStorage or use a default value
 const getInitialState = <T,>(key: string, defaultValue: T): T => {
@@ -25,6 +25,7 @@ interface AppContextType {
   currentUser: User | null;
   users: User[];
   specialOffers: SpecialOffer[];
+  heroSlides: HeroSlide[];
   recentlyViewed: Product[];
   addToCart: (product: Product, quantity: number, selectedPlan?: Product['plans'][0]) => void;
   removeFromCart: (productId: string, planName?: string) => void;
@@ -38,6 +39,7 @@ interface AppContextType {
   updateOrderStatus: (orderId: string, status: OrderStatus) => void;
   addProduct: (product: Omit<Product, 'id'>) => void;
   updateProduct: (product: Product) => void;
+  deleteProduct: (productId: string) => void;
   toggleProductStatus: (productId: string) => void;
   submitContactForm: (name: string, email: string, message: string) => void;
   addRecentlyViewed: (product: Product) => void;
@@ -47,6 +49,9 @@ interface AppContextType {
   addSpecialOffer: (offer: Omit<SpecialOffer, 'id'>) => void;
   updateSpecialOffer: (offer: SpecialOffer) => void;
   deleteSpecialOffer: (offerId: string) => void;
+  addHeroSlide: (slide: Omit<HeroSlide, 'id'>) => void;
+  updateHeroSlide: (slide: HeroSlide) => void;
+  deleteHeroSlide: (slideId: string) => void;
 }
 
 export const AppContext = createContext<AppContextType | null>(null);
@@ -62,6 +67,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [recentlyViewed, setRecentlyViewed] = useState<Product[]>(() => getInitialState('recentlyViewed', []));
   const [users, setUsers] = useState<User[]>(() => getInitialState('users', MOCK_USERS));
   const [specialOffers, setSpecialOffers] = useState<SpecialOffer[]>(() => getInitialState('specialOffers', MOCK_SPECIAL_OFFERS));
+  const [heroSlides, setHeroSlides] = useState<HeroSlide[]>(() => getInitialState('heroSlides', MOCK_HERO_SLIDES));
 
   // Effects to save state to localStorage whenever it changes
   useEffect(() => { try { localStorage.setItem('products', JSON.stringify(products)); } catch (e) { console.error("Failed to save products", e) } }, [products]);
@@ -74,6 +80,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   useEffect(() => { localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed)); }, [recentlyViewed]);
   useEffect(() => { localStorage.setItem('users', JSON.stringify(users)); }, [users]);
   useEffect(() => { localStorage.setItem('specialOffers', JSON.stringify(specialOffers)); }, [specialOffers]);
+  useEffect(() => { localStorage.setItem('heroSlides', JSON.stringify(heroSlides)); }, [heroSlides]);
 
   const addToCart = (product: Product, quantity: number, selectedPlan?: Product['plans'][0]) => {
     setCart(prevCart => {
@@ -161,6 +168,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const updateProduct = (updatedProduct: Product) => {
     setProducts(prev => prev.map(p => p.id === updatedProduct.id ? updatedProduct : p));
   };
+
+  const deleteProduct = (productId: string) => {
+    setProducts(prev => prev.filter(p => p.id !== productId));
+  };
   
   const toggleProductStatus = (productId: string) => {
     setProducts(prev => prev.map(p => p.id === productId ? {...p, isLive: !p.isLive} : p))
@@ -230,6 +241,22 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const deleteSpecialOffer = (offerId: string) => {
       setSpecialOffers(prev => prev.filter(o => o.id !== offerId));
   }
+  
+  const addHeroSlide = (slideData: Omit<HeroSlide, 'id'>) => {
+      const newSlide: HeroSlide = {
+          ...slideData,
+          id: `slide-${Date.now()}`
+      };
+      setHeroSlides(prev => [...prev, newSlide]);
+  };
+
+  const updateHeroSlide = (updatedSlide: HeroSlide) => {
+      setHeroSlides(prev => prev.map(s => s.id === updatedSlide.id ? updatedSlide : s));
+  };
+
+  const deleteHeroSlide = (slideId: string) => {
+      setHeroSlides(prev => prev.filter(s => s.id !== slideId));
+  };
 
   return (
     <AppContext.Provider value={{
@@ -242,6 +269,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       currentUser,
       users,
       specialOffers,
+      heroSlides,
       recentlyViewed,
       addToCart,
       removeFromCart,
@@ -255,6 +283,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       updateOrderStatus,
       addProduct,
       updateProduct,
+      deleteProduct,
       toggleProductStatus,
       submitContactForm,
       addRecentlyViewed,
@@ -264,6 +293,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       addSpecialOffer,
       updateSpecialOffer,
       deleteSpecialOffer,
+      addHeroSlide,
+      updateHeroSlide,
+      deleteHeroSlide,
     }}>
       {children}
     </AppContext.Provider>

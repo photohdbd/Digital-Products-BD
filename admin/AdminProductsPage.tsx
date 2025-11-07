@@ -10,7 +10,7 @@ const AdminProductsPage: React.FC = () => {
   const [editingProduct, setEditingProduct] = useState<Product | undefined>(undefined);
 
   if (!context) return null;
-  const { products, toggleProductStatus } = context;
+  const { products, toggleProductStatus, deleteProduct } = context;
 
   const openAddModal = () => {
     setEditingProduct(undefined);
@@ -26,6 +26,12 @@ const AdminProductsPage: React.FC = () => {
     setIsModalOpen(false);
     setEditingProduct(undefined);
   };
+  
+  const handleDelete = (productId: string, productName: string) => {
+    if (window.confirm(`Are you sure you want to permanently delete "${productName}"? This action cannot be undone.`)) {
+        deleteProduct(productId);
+    }
+  }
 
   return (
     <div className="space-y-8">
@@ -62,6 +68,9 @@ const AdminProductsPage: React.FC = () => {
                   <button onClick={() => openEditModal(product)} className="text-blue-400 hover:underline">Edit</button>
                   <button onClick={() => toggleProductStatus(product.id)} className="text-yellow-400 hover:underline">
                     {product.isLive ? 'Disable' : 'Enable'}
+                  </button>
+                  <button onClick={() => handleDelete(product.id, product.name)} className="text-red-400 hover:underline">
+                    Delete
                   </button>
                 </td>
               </tr>

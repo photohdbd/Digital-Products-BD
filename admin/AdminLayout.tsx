@@ -5,8 +5,8 @@ const AdminLayout: React.FC = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    sessionStorage.removeItem('isAdminLoggedIn');
-    navigate('/admin', { replace: true });
+    localStorage.removeItem('isAdminLoggedIn');
+    navigate('/', { replace: true });
   }
 
   const linkClasses = ({ isActive }: { isActive: boolean }) =>
@@ -26,8 +26,11 @@ const AdminLayout: React.FC = () => {
           <NavLink to="/" className={linkClasses}>Back to Site</NavLink>
         </nav>
         <div>
-            <button onClick={handleLogout} className="w-full flex items-center px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/20">
-                Logout
+            <button onClick={handleLogout} className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-lg text-red-400 hover:bg-red-500/20 hover:text-red-300">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" />
+                </svg>
+                <span>Logout</span>
             </button>
         </div>
       </aside>

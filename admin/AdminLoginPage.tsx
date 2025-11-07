@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const AdminLoginPage: React.FC = () => {
@@ -6,10 +6,16 @@ const AdminLoginPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  useEffect(() => {
+    if (localStorage.getItem('isAdminLoggedIn') === 'true') {
+      navigate('/admin/dashboard', { replace: true });
+    }
+  }, [navigate]);
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (password === 'Password') {
-      sessionStorage.setItem('isAdminLoggedIn', 'true');
+      localStorage.setItem('isAdminLoggedIn', 'true');
       navigate('/admin/dashboard');
     } else {
       setError('Incorrect password.');
@@ -53,7 +59,7 @@ const AdminLoginPage: React.FC = () => {
 // A simple protected route wrapper
 export const ProtectedAdminRoute: React.FC<{children: React.ReactNode}> = ({ children }) => {
     const navigate = useNavigate();
-    const isLoggedIn = sessionStorage.getItem('isAdminLoggedIn') === 'true';
+    const isLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
 
     React.useEffect(() => {
         if (!isLoggedIn) {

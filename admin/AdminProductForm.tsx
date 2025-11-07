@@ -55,13 +55,22 @@ const AdminProductForm: React.FC<AdminProductFormProps> = ({ product, onSave }) 
           const file = e.target.files[0];
           const reader = new FileReader();
           reader.onloadend = () => {
-              setImagePreview(reader.result as string);
-              // In a real app, you would upload this file and get a URL.
-              // For this mock, we'll just keep the placeholder.
-              setFormData(prev => ({...prev, images: [prev.images[0]]}));
+              const newImageUrl = reader.result as string;
+              setImagePreview(newImageUrl);
+              setFormData(prev => ({...prev, images: [newImageUrl]}));
           }
           reader.readAsDataURL(file);
       }
+  };
+  
+  const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newUrl = e.target.value;
+    setFormData(prev => ({...prev, images: [newUrl]}));
+    if (newUrl) {
+      setImagePreview(newUrl);
+    } else {
+      setImagePreview('https://i.imgur.com/Wb2rgJH.png'); // Reset to placeholder if URL is cleared
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -81,7 +90,7 @@ const AdminProductForm: React.FC<AdminProductFormProps> = ({ product, onSave }) 
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-h-[70vh] overflow-y-auto pr-2 text-gray-300">
+    <form onSubmit={handleSubmit} className="space-y-4 max-h-[80vh] overflow-y-auto pr-2 text-gray-300">
        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
                  <div>
@@ -107,11 +116,18 @@ const AdminProductForm: React.FC<AdminProductFormProps> = ({ product, onSave }) 
             </div>
             <div className="space-y-4">
                  <div>
-                    <label className="block text-sm font-medium mb-1">Product Image</label>
+                    <label className="block text-sm font-medium mb-1">Product Image Preview</label>
                     <div className="mt-1 flex flex-col items-center p-2 border-2 border-dashed border-gray-600 rounded-md">
-                        {imagePreview && <img src={imagePreview} alt="Preview" className="w-full h-48 object-cover rounded-md mb-2" />}
-                        <input type="file" onChange={handleImageChange} accept="image/*" className="text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"/>
+                        {imagePreview && <img src={imagePreview} alt="Preview" className="w-full h-48 object-contain rounded-md mb-2 bg-white/10" />}
                     </div>
+                </div>
+                <div>
+                    <label className="block text-sm font-medium mb-1">Image URL</label>
+                    <input type="url" placeholder="https://example.com/image.png" value={formData.images[0]} onChange={handleImageUrlChange} className="w-full bg-base-300 border border-gray-600 p-2 rounded-md text-white" />
+                </div>
+                <div>
+                    <label className="block text-sm font-medium mb-1">Or Upload Image</label>
+                    <input type="file" onChange={handleImageChange} accept="image/*" className="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"/>
                 </div>
                 <div>
                     <label className="block text-sm font-medium mb-1">Category</label>

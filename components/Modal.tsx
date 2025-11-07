@@ -12,7 +12,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50" onClick={onClose}>
-      <div className="bg-base-200 rounded-lg shadow-lifted w-11/12 md:w-1/3 p-6 border border-base-300" onClick={e => e.stopPropagation()}>
+      <div className="bg-base-200 rounded-lg shadow-lifted w-11/12 md:w-3/4 lg:w-2/3 max-w-4xl p-6 border border-base-300" onClick={e => e.stopPropagation()}>
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold text-white">{title}</h2>
           <button onClick={onClose} className="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>

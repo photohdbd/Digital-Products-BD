@@ -83,6 +83,11 @@ const RegisterPage: React.FC = () => {
               Already have an account? <Link to="/login" className="text-primary hover:underline">Login here</Link>
           </p>
         </form>
+        <div className="text-center mt-6">
+          <Link to="/" className="text-sm text-gray-400 hover:text-primary transition-colors duration-300">
+            &larr; Back to Site
+          </Link>
+        </div>
       </div>
     </div>
   );

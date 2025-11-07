@@ -1,4 +1,3 @@
-
 import React, { useState, useContext, useEffect } from 'react';
 import { Product } from '../types';
 import { AppContext } from '../context/AppContext';
@@ -82,28 +81,28 @@ const AdminProductForm: React.FC<AdminProductFormProps> = ({ product, onSave }) 
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-h-[70vh] overflow-y-auto pr-2 text-gray-200">
+    <form onSubmit={handleSubmit} className="space-y-4 max-h-[70vh] overflow-y-auto pr-2 text-gray-700">
        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
                  <div>
                     <label className="block text-sm font-medium mb-1">Product Name</label>
-                    <input name="name" value={formData.name} onChange={handleChange} required className="w-full bg-base-300 p-2 rounded" />
+                    <input name="name" value={formData.name} onChange={handleChange} required className="w-full bg-base-200 border border-base-300 p-2 rounded-md" />
                 </div>
                 <div>
                     <label className="block text-sm font-medium mb-1">Description</label>
-                    <textarea name="description" value={formData.description} onChange={handleChange} required rows={5} className="w-full bg-base-300 p-2 rounded" />
+                    <textarea name="description" value={formData.description} onChange={handleChange} required rows={5} className="w-full bg-base-200 border border-base-300 p-2 rounded-md" />
                 </div>
                  <div>
                     <label className="block text-sm font-medium mb-1">Price (BDT)</label>
-                    <input name="price" type="number" step="0.01" value={formData.price} onChange={handleChange} required className="w-full bg-base-300 p-2 rounded" />
+                    <input name="price" type="number" step="0.01" value={formData.price} onChange={handleChange} required className="w-full bg-base-200 border border-base-300 p-2 rounded-md" />
                 </div>
                 <div>
                     <label className="block text-sm font-medium mb-1">Discount Price (Optional)</label>
-                    <input name="discountPrice" type="number" step="0.01" value={formData.discountPrice || ''} onChange={handleChange} className="w-full bg-base-300 p-2 rounded" />
+                    <input name="discountPrice" type="number" step="0.01" value={formData.discountPrice || ''} onChange={handleChange} className="w-full bg-base-200 border border-base-300 p-2 rounded-md" />
                 </div>
                  <div>
                     <label className="block text-sm font-medium mb-1">Discount End Time</label>
-                    <input name="discountUntil" type="datetime-local" value={formData.discountUntil || ''} onChange={handleChange} className="w-full bg-base-300 p-2 rounded" />
+                    <input name="discountUntil" type="datetime-local" value={formData.discountUntil || ''} onChange={handleChange} className="w-full bg-base-200 border border-base-300 p-2 rounded-md" />
                 </div>
             </div>
             <div className="space-y-4">
@@ -111,30 +110,30 @@ const AdminProductForm: React.FC<AdminProductFormProps> = ({ product, onSave }) 
                     <label className="block text-sm font-medium mb-1">Product Image</label>
                     <div className="mt-1 flex flex-col items-center p-2 border-2 border-dashed border-base-300 rounded-md">
                         {imagePreview && <img src={imagePreview} alt="Preview" className="w-full h-48 object-cover rounded-md mb-2" />}
-                        <input type="file" onChange={handleImageChange} accept="image/*" className="text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-opacity-80"/>
+                        <input type="file" onChange={handleImageChange} accept="image/*" className="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"/>
                     </div>
                 </div>
                 <div>
                     <label className="block text-sm font-medium mb-1">Category</label>
-                    <input list="categories" name="category" value={formData.category} onChange={handleChange} className="w-full bg-base-300 p-2 rounded" />
+                    <input list="categories" name="category" value={formData.category} onChange={handleChange} className="w-full bg-base-200 border border-base-300 p-2 rounded-md" />
                     <datalist id="categories">
                          {MOCK_CATEGORIES.map(cat => <option key={cat} value={cat} />)}
                     </datalist>
                 </div>
                  <div>
                     <label className="block text-sm font-medium mb-1">Tags (comma separated)</label>
-                    <input value={formData.tags.join(', ')} onChange={handleTagsChange} className="w-full bg-base-300 p-2 rounded" />
+                    <input value={formData.tags.join(', ')} onChange={handleTagsChange} className="w-full bg-base-200 border border-base-300 p-2 rounded-md" />
                 </div>
-                 <label className="flex items-center space-x-3 text-white pt-4">
-                    <input name="isLive" type="checkbox" checked={formData.isLive} onChange={handleChange} className="h-5 w-5 rounded bg-base-300 text-primary focus:ring-primary" />
+                 <label className="flex items-center space-x-3 text-gray-800 pt-4">
+                    <input name="isLive" type="checkbox" checked={formData.isLive} onChange={handleChange} className="h-5 w-5 rounded bg-base-200 border-base-300 text-primary focus:ring-primary" />
                     <span>Make Product Live</span>
                 </label>
             </div>
        </div>
 
       <div className="flex justify-end space-x-2 pt-4 border-t border-base-300">
-        <button type="button" onClick={onSave} className="bg-base-300 px-4 py-2 rounded">Cancel</button>
-        <button type="submit" className="bg-primary px-4 py-2 rounded text-white">Save Product</button>
+        <button type="button" onClick={onSave} className="bg-base-200 hover:bg-base-300 px-4 py-2 rounded-md">Cancel</button>
+        <button type="submit" className="bg-primary hover:bg-opacity-80 px-4 py-2 rounded-md text-white">Save Product</button>
       </div>
     </form>
   );

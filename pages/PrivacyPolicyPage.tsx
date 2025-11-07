@@ -1,22 +1,21 @@
-
 import React from 'react';
 
 const PrivacyPolicyPage: React.FC = () => {
   return (
     <div className="container mx-auto px-6 py-12 max-w-4xl">
-      <h1 className="text-4xl font-bold text-white mb-8">Privacy Policy</h1>
-      <div className="prose prose-invert prose-lg text-gray-300 space-y-4">
+      <h1 className="text-4xl font-bold text-gray-900 mb-8">Privacy Policy</h1>
+      <div className="prose prose-lg text-gray-600 space-y-4">
         <p>Last updated: {new Date().toLocaleDateString()}</p>
         <p>
           Digital Products BD ("us", "we", or "our") operates the Digital Products BD website (the "Service"). This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.
         </p>
         
-        <h2 className="text-2xl text-white">Information Collection and Use</h2>
+        <h2 className="text-2xl text-gray-800">Information Collection and Use</h2>
         <p>
           We collect several different types of information for various purposes to provide and improve our Service to you. This includes your Full Name, Email, and Mobile Number for order processing and account management.
         </p>
         
-        <h2 className="text-2xl text-white">Use of Data</h2>
+        <h2 className="text-2xl text-gray-800">Use of Data</h2>
         <p>
           Digital Products BD uses the collected data for various purposes:
         </p>
@@ -28,17 +27,17 @@ const PrivacyPolicyPage: React.FC = () => {
           <li>To provide analysis or valuable information so that we can improve the Service</li>
         </ul>
 
-        <h2 className="text-2xl text-white">Security of Data</h2>
+        <h2 className="text-2xl text-gray-800">Security of Data</h2>
         <p>
           The security of your data is important to us, but remember that no method of transmission over the Internet, or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your Personal Data, we cannot guarantee its absolute security.
         </p>
 
-        <h2 className="text-2xl text-white">Changes to This Privacy Policy</h2>
+        <h2 className="text-2xl text-gray-800">Changes to This Privacy Policy</h2>
         <p>
           We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. You are advised to review this Privacy Policy periodically for any changes.
         </p>
         
-        <h2 className="text-2xl text-white">Contact Us</h2>
+        <h2 className="text-2xl text-gray-800">Contact Us</h2>
         <p>If you have any questions about this Privacy Policy, please contact us via our contact page.</p>
       </div>
     </div>

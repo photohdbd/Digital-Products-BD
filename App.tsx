@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { HashRouter, Routes, Route, Outlet, useLocation } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
@@ -18,7 +17,6 @@ import ContactPage from './pages/ContactPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsPage from './pages/TermsPage';
 import RefundPolicyPage from './pages/RefundPolicyPage';
-import BlogPage from './pages/BlogPage';
 import FAQPage from './pages/FAQPage';
 
 // Auth Pages
@@ -66,10 +64,13 @@ const App: React.FC = () => {
             <Route path="shop" element={<ShopPage />} />
             <Route path="product/:id" element={<ProductDetailPage />} />
             <Route path="cart" element={<CartPage />} />
-            <Route path="checkout" element={<CheckoutPage />} />
+            <Route path="checkout" element={
+              <UserProtectedRoute>
+                <CheckoutPage />
+              </UserProtectedRoute>
+            } />
             <Route path="about" element={<AboutPage />} />
             <Route path="contact" element={<ContactPage />} />
-            <Route path="blog" element={<BlogPage />} />
             <Route path="faq" element={<FAQPage />} />
 
             <Route path="privacy-policy" element={<PrivacyPolicyPage />} />

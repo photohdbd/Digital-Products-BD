@@ -1,5 +1,4 @@
-
-import React, { createContext, useState, ReactNode } from 'react';
+import React, { createContext, useState, ReactNode, useEffect } from 'react';
 import { Product, CartItem, Order, OrderStatus, CustomerDetails, PaymentMethod, ContactMessage, User } from '../types';
 import { MOCK_PRODUCTS } from '../constants';
 
@@ -11,9 +10,10 @@ interface AppContextType {
   messages: ContactMessage[];
   isAuthenticated: boolean;
   currentUser: User | null;
-  addToCart: (product: Product, quantity: number) => void;
-  removeFromCart: (productId: string) => void;
-  updateCartQuantity: (productId: string, quantity: number) => void;
+  recentlyViewed: Product[];
+  addToCart: (product: Product, quantity: number, selectedPlan?: Product['plans'][0]) => void;
+  removeFromCart: (productId: string, planName?: string) => void;
+  updateCartQuantity: (productId: string, quantity: number, planName?: string) => void;
   clearCart: () => void;
   isInCart: (productId: string) => boolean;
   addToWishlist: (product: Product) => void;
@@ -25,6 +25,7 @@ interface AppContextType {
   updateProduct: (product: Product) => void;
   toggleProductStatus: (productId: string) => void;
   submitContactForm: (name: string, email: string, message: string) => void;
+  addRecentlyViewed: (product: Product) => void;
   login: (email: string, pass: string) => boolean;
   logout: () => void;
   register: (name: string, email: string, pass: string) => boolean;
@@ -40,30 +41,37 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [recentlyViewed, setRecentlyViewed] = useState<Product[]>([]);
 
-  const addToCart = (product: Product, quantity: number) => {
+  const addToCart = (product: Product, quantity: number, selectedPlan?: Product['plans'][0]) => {
     setCart(prevCart => {
-      const existingItem = prevCart.find(item => item.id === product.id);
+      const existingItem = prevCart.find(item => item.product.id === product.id && item.selectedPlan?.name === selectedPlan?.name);
       if (existingItem) {
         return prevCart.map(item =>
-          item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
+          item.product.id === product.id && item.selectedPlan?.name === selectedPlan?.name
+            ? { ...item, quantity: item.quantity + quantity } 
+            : item
         );
       }
-      return [...prevCart, { ...product, quantity }];
+      return [...prevCart, { product, quantity, selectedPlan }];
     });
   };
 
-  const removeFromCart = (productId: string) => {
-    setCart(prevCart => prevCart.filter(item => item.id !== productId));
+  const removeFromCart = (productId: string, planName?: string) => {
+    setCart(prevCart => prevCart.filter(item => 
+        !(item.product.id === productId && item.selectedPlan?.name === planName)
+    ));
   };
 
-  const updateCartQuantity = (productId: string, quantity: number) => {
+  const updateCartQuantity = (productId: string, quantity: number, planName?: string) => {
     if (quantity <= 0) {
-      removeFromCart(productId);
+      removeFromCart(productId, planName);
     } else {
       setCart(prevCart =>
         prevCart.map(item =>
-          item.id === productId ? { ...item, quantity } : item
+          (item.product.id === productId && item.selectedPlan?.name === planName) 
+            ? { ...item, quantity } 
+            : item
         )
       );
     }
@@ -73,7 +81,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       setCart([]);
   }
 
-  const isInCart = (productId: string) => cart.some(item => item.id === productId);
+  const isInCart = (productId: string) => cart.some(item => item.product.id === productId);
   
   const addToWishlist = (product: Product) => {
     setWishlist(prev => {
@@ -91,9 +99,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const placeOrder = (customer: CustomerDetails, paymentMethod: PaymentMethod, transactionId?: string) => {
     const newOrder: Order = {
       id: `order-${Date.now()}`,
-      customer,
+      customer: { ...customer, email: currentUser?.email || customer.email },
       items: [...cart],
-      total: cart.reduce((sum, item) => sum + (item.discountPrice || item.price) * item.quantity, 0),
+      total: cart.reduce((sum, item) => {
+          const price = item.selectedPlan?.price || item.product.discountPrice || item.product.price;
+          return sum + price * item.quantity;
+      }, 0),
       paymentMethod,
       transactionId,
       status: OrderStatus.Pending,
@@ -133,10 +144,16 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       };
       setMessages(prev => [newMessage, ...prev]);
   };
+
+  const addRecentlyViewed = (product: Product) => {
+    setRecentlyViewed(prev => {
+        const newRecentlyViewed = [product, ...prev.filter(p => p.id !== product.id)];
+        return newRecentlyViewed.slice(0, 4); // Keep only the last 4 viewed products
+    });
+  }
   
   // Mock Auth functions
   const login = (email: string, pass: string): boolean => {
-      console.log("Attempting login for", email, pass);
       // In a real app, this would be an API call
       const mockUser: User = { id: 'user1', name: 'Test User', email: email };
       setCurrentUser(mockUser);
@@ -150,7 +167,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   };
   
   const register = (name: string, email: string, pass: string): boolean => {
-       console.log("Registering", name, email, pass);
        // This is a mock. In a real app, it would create a user.
        return login(email, pass);
   };
@@ -164,6 +180,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       messages,
       isAuthenticated,
       currentUser,
+      recentlyViewed,
       addToCart,
       removeFromCart,
       updateCartQuantity,
@@ -178,6 +195,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       updateProduct,
       toggleProductStatus,
       submitContactForm,
+      addRecentlyViewed,
       login,
       logout,
       register,

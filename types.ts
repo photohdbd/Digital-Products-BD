@@ -1,4 +1,3 @@
-
 export interface Product {
   id: string;
   name: string;
@@ -10,10 +9,20 @@ export interface Product {
   tags: string[];
   category: string;
   isLive: boolean;
+  plans?: {
+    name: string;
+    price: number;
+    originalPrice?: number;
+  }[];
+  details?: {
+    [key: string]: string | string[];
+  };
 }
 
-export interface CartItem extends Product {
+export interface CartItem {
+  product: Product;
   quantity: number;
+  selectedPlan?: Product['plans'][0];
 }
 
 export enum OrderStatus {
@@ -61,15 +70,6 @@ export interface ContactMessage {
     email: string;
     message: string;
     receivedAt: string;
-}
-
-export interface BlogPost {
-    id: string;
-    title: string;
-    author: string;
-    date: string;
-    excerpt: string;
-    imageUrl: string;
 }
 
 export interface Review {

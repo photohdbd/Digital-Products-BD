@@ -7,7 +7,7 @@ interface CountdownTimerProps {
 const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) => {
   const calculateTimeLeft = () => {
     const difference = +new Date(targetDate) - +new Date();
-    // Fix: Explicitly type `timeLeft` to ensure values are treated as numbers.
+    // Explicitly type `timeLeft` to ensure values are treated as numbers.
     let timeLeft: { [key: string]: number } = {};
 
     if (difference > 0) {
@@ -22,8 +22,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) => {
     return timeLeft;
   };
 
-  // Fix: Explicitly type the useState hook to ensure timeLeft's value is always a number.
-  // This resolves the TypeScript error where `value` was inferred as `unknown`.
+  // Explicitly type the useState hook to help with type inference.
   const [timeLeft, setTimeLeft] = useState<{ [key: string]: number }>(calculateTimeLeft());
 
   useEffect(() => {
@@ -35,7 +34,10 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) => {
   });
 
   const timerComponents = Object.entries(timeLeft).map(([interval, value]) => {
-      if (value < 0) return null;
+      // FIX: The type of `value` from `Object.entries` on an object with an index signature
+      // can be inferred as `unknown`. Using a `typeof` check acts as a type guard to
+      // ensure `value` is a number before performing a numeric comparison.
+      if (typeof value !== 'number' || value < 0) return null;
       return (
           <div key={interval} className="flex flex-col items-center mx-2">
               <span className="text-xl md:text-2xl font-bold text-accent">{String(value).padStart(2, '0')}</span>

@@ -1,4 +1,3 @@
-
 import React, { useState, useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import CartIcon from './CartIcon';
@@ -9,24 +8,23 @@ const Header: React.FC = () => {
     const context = useContext(AppContext);
 
     const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
-        `text-lg font-medium transition-colors duration-300 ${isActive ? 'text-accent' : 'text-gray-300 hover:text-white'}`;
+        `text-lg font-medium transition-colors duration-300 ${isActive ? 'text-primary' : 'text-gray-600 hover:text-primary'}`;
 
     const mobileNavLinkClasses = ({ isActive }: { isActive: boolean }) =>
-        `block py-2 px-4 text-lg ${isActive ? 'bg-primary text-white' : 'text-gray-200'}`;
+        `block py-2 px-4 text-lg ${isActive ? 'bg-primary text-white' : 'text-gray-700'}`;
 
     let navLinks = [
         { path: '/', name: 'Home' },
         { path: '/shop', name: 'Shop' },
-        { path: '/blog', name: 'Blog' },
         { path: '/about', name: 'About' },
         { path: '/contact', name: 'Contact' },
     ];
 
     return (
-        <header className="bg-base-200/80 backdrop-blur-sm sticky top-0 z-50 shadow-lg">
+        <header className="bg-base-100/80 backdrop-blur-sm sticky top-0 z-50 shadow-subtle">
             <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-                <Link to="/" className="text-2xl font-bold text-white tracking-wider">
-                    Digital Products<span className="text-accent"> BD</span>
+                <Link to="/" className="text-2xl font-bold text-gray-900 tracking-wider">
+                    Digital Products<span className="text-primary"> BD</span>
                 </Link>
 
                 <nav className="hidden lg:flex space-x-8 items-center">
@@ -44,7 +42,7 @@ const Header: React.FC = () => {
 
                 <div className="flex items-center space-x-4">
                     <CartIcon />
-                    <button className="lg:hidden text-gray-200 hover:text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                    <button className="lg:hidden text-gray-700 hover:text-primary" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"} />
                         </svg>
@@ -52,7 +50,7 @@ const Header: React.FC = () => {
                 </div>
             </div>
             {isMenuOpen && (
-                <div className="lg:hidden bg-base-300">
+                <div className="lg:hidden bg-base-100 shadow-lg">
                     <nav className="flex flex-col p-4">
                         {navLinks.map(link => (
                             <NavLink key={link.path} to={link.path} className={mobileNavLinkClasses} onClick={() => setIsMenuOpen(false)}>

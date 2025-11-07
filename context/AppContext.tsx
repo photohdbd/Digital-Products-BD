@@ -1,6 +1,6 @@
 import React, { createContext, useState, ReactNode, useEffect } from 'react';
-import { Product, CartItem, Order, OrderStatus, CustomerDetails, PaymentMethod, ContactMessage, User } from '../types';
-import { MOCK_PRODUCTS } from '../constants';
+import { Product, CartItem, Order, OrderStatus, CustomerDetails, PaymentMethod, ContactMessage, User, SpecialOffer } from '../types';
+import { MOCK_PRODUCTS, MOCK_USERS, MOCK_SPECIAL_OFFERS } from '../constants';
 
 interface AppContextType {
   products: Product[];
@@ -10,6 +10,8 @@ interface AppContextType {
   messages: ContactMessage[];
   isAuthenticated: boolean;
   currentUser: User | null;
+  users: User[];
+  specialOffers: SpecialOffer[];
   recentlyViewed: Product[];
   addToCart: (product: Product, quantity: number, selectedPlan?: Product['plans'][0]) => void;
   removeFromCart: (productId: string, planName?: string) => void;
@@ -26,9 +28,12 @@ interface AppContextType {
   toggleProductStatus: (productId: string) => void;
   submitContactForm: (name: string, email: string, message: string) => void;
   addRecentlyViewed: (product: Product) => void;
-  login: (email: string, pass: string) => boolean;
+  login: (email: string, pass: string) => { success: boolean, message: string };
   logout: () => void;
-  register: (name: string, email: string, pass: string) => boolean;
+  register: (name: string, email: string, pass: string) => { success: boolean, message: string };
+  addSpecialOffer: (offer: Omit<SpecialOffer, 'id'>) => void;
+  updateSpecialOffer: (offer: SpecialOffer) => void;
+  deleteSpecialOffer: (offerId: string) => void;
 }
 
 export const AppContext = createContext<AppContextType | null>(null);
@@ -42,6 +47,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [recentlyViewed, setRecentlyViewed] = useState<Product[]>([]);
+  const [users, setUsers] = useState<User[]>(MOCK_USERS);
+  const [specialOffers, setSpecialOffers] = useState<SpecialOffer[]>(MOCK_SPECIAL_OFFERS);
 
   const addToCart = (product: Product, quantity: number, selectedPlan?: Product['plans'][0]) => {
     setCart(prevCart => {
@@ -152,13 +159,17 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     });
   }
   
-  // Mock Auth functions
-  const login = (email: string, pass: string): boolean => {
-      // In a real app, this would be an API call
-      const mockUser: User = { id: 'user1', name: 'Test User', email: email };
-      setCurrentUser(mockUser);
+  const login = (email: string, pass: string) => {
+      const user = users.find(u => u.email === email);
+      if (!user) {
+          return { success: false, message: 'No account found with this email. Please register.' };
+      }
+      if (user.password !== pass) {
+          return { success: false, message: 'Incorrect password.' };
+      }
+      setCurrentUser(user);
       setIsAuthenticated(true);
-      return true;
+      return { success: true, message: 'Login successful!' };
   };
   
   const logout = () => {
@@ -166,10 +177,34 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       setIsAuthenticated(false);
   };
   
-  const register = (name: string, email: string, pass: string): boolean => {
-       // This is a mock. In a real app, it would create a user.
-       return login(email, pass);
+  const register = (name: string, email: string, pass: string) => {
+       const existingUser = users.find(u => u.email === email);
+       if (existingUser) {
+           return { success: false, message: 'An account with this email already exists.' };
+       }
+       const newUser: User = { id: `user-${Date.now()}`, name, email, password: pass };
+       setUsers(prev => [...prev, newUser]);
+       // Automatically log in the new user
+       setCurrentUser(newUser);
+       setIsAuthenticated(true);
+       return { success: true, message: 'Registration successful!' };
   };
+
+  const addSpecialOffer = (offerData: Omit<SpecialOffer, 'id'>) => {
+      const newOffer: SpecialOffer = {
+          ...offerData,
+          id: `offer-${Date.now()}`
+      };
+      setSpecialOffers(prev => [newOffer, ...prev]);
+  };
+
+  const updateSpecialOffer = (updatedOffer: SpecialOffer) => {
+      setSpecialOffers(prev => prev.map(o => o.id === updatedOffer.id ? updatedOffer : o));
+  };
+
+  const deleteSpecialOffer = (offerId: string) => {
+      setSpecialOffers(prev => prev.filter(o => o.id !== offerId));
+  }
 
   return (
     <AppContext.Provider value={{
@@ -180,6 +215,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       messages,
       isAuthenticated,
       currentUser,
+      users,
+      specialOffers,
       recentlyViewed,
       addToCart,
       removeFromCart,
@@ -199,6 +236,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       login,
       logout,
       register,
+      addSpecialOffer,
+      updateSpecialOffer,
+      deleteSpecialOffer,
     }}>
       {children}
     </AppContext.Provider>

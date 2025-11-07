@@ -14,7 +14,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ title, children, isOpen, 
         onClick={onClick}
         className="w-full flex justify-between items-center text-left py-4"
       >
-        <span className="text-lg font-semibold text-gray-800">{title}</span>
+        <span className="text-lg font-semibold text-white">{title}</span>
         <svg
           className={`w-6 h-6 text-primary transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
@@ -25,7 +25,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ title, children, isOpen, 
         </svg>
       </button>
       <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-screen' : 'max-h-0'}`}>
-        <div className="py-4 text-gray-600 prose">{children}</div>
+        <div className="py-4 text-gray-300 prose prose-invert">{children}</div>
       </div>
     </div>
   );
@@ -43,7 +43,7 @@ const Accordion: React.FC<AccordionProps> = ({ sections }) => {
     };
 
     return (
-        <div className="bg-base-100 p-6 rounded-xl shadow-subtle border border-base-300">
+        <div className="bg-base-200 p-6 rounded-xl shadow-subtle border border-base-300">
             {Object.entries(sections).map(([title, content], index) => (
                 <AccordionItem
                     key={index}

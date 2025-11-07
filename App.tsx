@@ -33,6 +33,8 @@ import AdminDashboardPage from './admin/AdminDashboardPage';
 import AdminProductsPage from './admin/AdminProductsPage';
 import AdminOrdersPage from './admin/AdminOrdersPage';
 import AdminMessagesPage from './admin/AdminMessagesPage';
+import AdminCustomersPage from './admin/AdminCustomersPage';
+import AdminOffersPage from './admin/AdminOffersPage';
 
 const MainLayout = () => {
     const location = useLocation();
@@ -97,6 +99,8 @@ const App: React.FC = () => {
             <Route path="dashboard" element={<AdminDashboardPage />} />
             <Route path="products" element={<AdminProductsPage />} />
             <Route path="orders" element={<AdminOrdersPage />} />
+            <Route path="offers" element={<AdminOffersPage />} />
+            <Route path="customers" element={<AdminCustomersPage />} />
             <Route path="messages" element={<AdminMessagesPage />} />
           </Route>
         </Routes>

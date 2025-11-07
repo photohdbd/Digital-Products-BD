@@ -17,16 +17,16 @@ const AdminLoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="w-full max-w-sm p-8 space-y-8 bg-white rounded-2xl shadow-lifted">
+    <div className="min-h-screen flex items-center justify-center bg-base-100">
+      <div className="w-full max-w-sm p-8 space-y-8 bg-base-200 rounded-2xl shadow-lifted border border-base-300">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-900">Admin Login</h1>
-          <p className="mt-2 text-gray-500">Enter the administrator password.</p>
+          <h1 className="text-3xl font-bold text-white">Admin Login</h1>
+          <p className="mt-2 text-gray-400">Enter the administrator password.</p>
         </div>
         <form className="space-y-6" onSubmit={handleLogin}>
           {error && <p className="text-red-500 text-center text-sm">{error}</p>}
           <div>
-            <label htmlFor="password"  className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+            <label htmlFor="password"  className="block text-sm font-medium text-gray-300 mb-2">Password</label>
             <input
               id="password"
               name="password"
@@ -35,7 +35,7 @@ const AdminLoginPage: React.FC = () => {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-base-200 border border-base-300 rounded-md py-2 px-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full bg-base-300 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
           <button

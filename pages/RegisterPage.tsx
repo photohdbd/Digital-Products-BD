@@ -13,30 +13,29 @@ const RegisterPage: React.FC = () => {
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    // Basic validation
     if (password.length < 6) {
         setError("Password must be at least 6 characters long.");
         return;
     }
-    const success = context?.register(name, email, password);
-    if (success) {
+    const result = context?.register(name, email, password);
+    if (result?.success) {
       navigate('/account');
     } else {
-      setError('An error occurred during registration. Please try again.');
+      setError(result?.message || 'An error occurred during registration.');
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-200 py-12 px-4">
-      <div className="w-full max-w-md p-8 space-y-8 bg-base-100 rounded-2xl shadow-lifted border border-base-300">
+    <div className="min-h-screen flex items-center justify-center bg-base-100 py-12 px-4">
+      <div className="w-full max-w-md p-8 space-y-8 bg-base-200 rounded-2xl shadow-lifted border border-base-300">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-900">Create an Account</h1>
-          <p className="mt-2 text-gray-600">Join us and start shopping!</p>
+          <h1 className="text-3xl font-bold text-white">Create an Account</h1>
+          <p className="mt-2 text-gray-400">Join us and start shopping!</p>
         </div>
         <form className="space-y-6" onSubmit={handleRegister}>
-          {error && <p className="text-red-500 text-center bg-red-100 p-3 rounded-md">{error}</p>}
+          {error && <p className="text-red-400 text-center bg-red-500/20 p-3 rounded-md">{error}</p>}
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
             <input
               id="name"
               name="name"
@@ -45,11 +44,11 @@ const RegisterPage: React.FC = () => {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-base-200 border border-base-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full bg-base-300 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email address</label>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">Email address</label>
             <input
               id="email"
               name="email"
@@ -58,11 +57,11 @@ const RegisterPage: React.FC = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-base-200 border border-base-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full bg-base-300 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
           <div>
-            <label htmlFor="password"  className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+            <label htmlFor="password"  className="block text-sm font-medium text-gray-300 mb-2">Password</label>
             <input
               id="password"
               name="password"
@@ -71,7 +70,7 @@ const RegisterPage: React.FC = () => {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-base-200 border border-base-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full bg-base-300 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
           <button
@@ -80,7 +79,7 @@ const RegisterPage: React.FC = () => {
           >
             Create Account
           </button>
-           <p className="text-center text-gray-600">
+           <p className="text-center text-gray-400">
               Already have an account? <Link to="/login" className="text-primary hover:underline">Login here</Link>
           </p>
         </form>

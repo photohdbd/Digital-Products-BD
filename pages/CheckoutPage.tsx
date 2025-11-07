@@ -52,16 +52,16 @@ const CheckoutPage: React.FC = () => {
     const isSendMoney = paymentMethod === PaymentMethod.BKash || paymentMethod === PaymentMethod.Nagad || paymentMethod === PaymentMethod.Rocket;
     if (isSendMoney || paymentMethod === PaymentMethod.Bank) {
       return (
-        <div className="mt-4 bg-base-200 p-4 rounded-md">
-            <p className="text-gray-600">Please send money to: <span className="font-bold text-primary">01234567890 ({paymentMethod})</span></p>
-            <p className="text-gray-500 text-sm mt-1">Please include your name as reference.</p>
+        <div className="mt-4 bg-base-100 p-4 rounded-md">
+            <p className="text-gray-300">Please send money to: <span className="font-bold text-primary">01234567890 ({paymentMethod})</span></p>
+            <p className="text-gray-400 text-sm mt-1">Please include your name as reference.</p>
             <input
                 type="text"
                 placeholder="Transaction ID"
                 value={transactionId}
                 onChange={(e) => setTransactionId(e.target.value)}
                 required
-                className="w-full mt-2 bg-base-100 border border-base-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full mt-2 bg-base-300 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-primary"
             />
         </div>
       );
@@ -77,22 +77,22 @@ const CheckoutPage: React.FC = () => {
   return (
     <>
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">Checkout</h1>
+      <h1 className="text-4xl font-bold text-white mb-8 text-center">Checkout</h1>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        <form onSubmit={handleSubmit} className="bg-base-100 p-8 rounded-xl shadow-subtle border border-base-300">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Your Information</h2>
+        <form onSubmit={handleSubmit} className="bg-base-200 p-8 rounded-xl shadow-subtle border border-base-300">
+          <h2 className="text-2xl font-bold text-white mb-6">Your Information</h2>
           <div className="space-y-4">
-            <input type="text" name="fullName" placeholder="Full Name" value={customerDetails.fullName} onChange={handleInputChange} required className="w-full bg-base-200 border border-base-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary" />
-            <input type="email" name="email" placeholder="Email" value={customerDetails.email} onChange={handleInputChange} required className="w-full bg-base-200 border border-base-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary" />
-            <input type="tel" name="mobile" placeholder="Mobile Number" value={customerDetails.mobile} onChange={handleInputChange} required className="w-full bg-base-200 border border-base-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary" />
+            <input type="text" name="fullName" placeholder="Full Name" value={customerDetails.fullName} onChange={handleInputChange} required className="w-full bg-base-300 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-primary" />
+            <input type="email" name="email" placeholder="Email" value={customerDetails.email} onChange={handleInputChange} required className="w-full bg-base-300 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-primary" />
+            <input type="tel" name="mobile" placeholder="Mobile Number" value={customerDetails.mobile} onChange={handleInputChange} required className="w-full bg-base-300 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-primary" />
           </div>
 
-          <h2 className="text-2xl font-bold text-gray-800 mt-8 mb-4">Payment Method</h2>
+          <h2 className="text-2xl font-bold text-white mt-8 mb-4">Payment Method</h2>
           <div className="space-y-2">
             {Object.values(PaymentMethod).map(method => (
-              <label key={method} className="flex items-center p-3 bg-base-200 rounded-md cursor-pointer">
-                <input type="radio" name="paymentMethod" value={method} checked={paymentMethod === method} onChange={() => setPaymentMethod(method)} className="form-radio h-5 w-5 text-primary bg-base-300 border-base-300 focus:ring-primary focus:ring-offset-base-200" />
-                <span className="ml-3 text-gray-800">{method}</span>
+              <label key={method} className="flex items-center p-3 bg-base-300 rounded-md cursor-pointer">
+                <input type="radio" name="paymentMethod" value={method} checked={paymentMethod === method} onChange={() => setPaymentMethod(method)} className="form-radio h-5 w-5 text-primary bg-gray-700 border-gray-600 focus:ring-primary focus:ring-offset-base-200" />
+                <span className="ml-3 text-gray-200">{method}</span>
               </label>
             ))}
           </div>
@@ -103,8 +103,8 @@ const CheckoutPage: React.FC = () => {
           </button>
         </form>
 
-        <div className="bg-base-100 p-8 rounded-xl shadow-subtle h-fit border border-base-300">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Your Order</h2>
+        <div className="bg-base-200 p-8 rounded-xl shadow-subtle h-fit border border-base-300">
+          <h2 className="text-2xl font-bold text-white mb-6">Your Order</h2>
           <div className="space-y-4">
             {cart.map(item => {
                 const price = item.selectedPlan?.price || item.product.discountPrice || item.product.price;
@@ -112,27 +112,27 @@ const CheckoutPage: React.FC = () => {
                 return (
                     <div key={uniqueKey} className="flex justify-between items-start">
                         <div className="flex items-start">
-                            <img src={item.product.images[0]} alt={item.product.name} className="w-16 h-16 object-contain rounded-md mr-4" />
+                            <img src={item.product.images[0]} alt={item.product.name} className="w-16 h-16 object-contain rounded-md mr-4 bg-white p-1" />
                             <div>
-                                <p className="text-gray-800 font-semibold">{item.product.name}</p>
-                                {item.selectedPlan && <p className="text-sm text-gray-500">{item.selectedPlan.name}</p>}
-                                <p className="text-gray-500 text-sm">Qty: {item.quantity}</p>
+                                <p className="text-gray-200 font-semibold">{item.product.name}</p>
+                                {item.selectedPlan && <p className="text-sm text-gray-400">{item.selectedPlan.name}</p>}
+                                <p className="text-gray-400 text-sm">Qty: {item.quantity}</p>
                             </div>
                         </div>
-                        <p className="text-gray-800 font-semibold">৳{(price * item.quantity).toFixed(2)}</p>
+                        <p className="text-gray-200 font-semibold">৳{(price * item.quantity).toFixed(2)}</p>
                     </div>
                 )
             })}
           </div>
           <div className="border-t border-base-300 mt-6 pt-4 space-y-2">
-            <div className="flex justify-between text-lg"><span className="text-gray-600">Subtotal</span> <span className="text-gray-800">৳{total.toFixed(2)}</span></div>
-            <div className="flex justify-between text-2xl font-bold"><span className="text-gray-900">Total</span> <span className="text-primary">৳{total.toFixed(2)}</span></div>
+            <div className="flex justify-between text-lg"><span className="text-gray-300">Subtotal</span> <span className="text-gray-200">৳{total.toFixed(2)}</span></div>
+            <div className="flex justify-between text-2xl font-bold"><span className="text-white">Total</span> <span className="text-primary">৳{total.toFixed(2)}</span></div>
           </div>
         </div>
       </div>
     </div>
     <Modal isOpen={showModal} onClose={closeModal} title="Order Received!">
-        <div className="text-gray-700">
+        <div className="text-gray-300">
             <p>Thank you for your purchase.</p>
             <p className="mt-2">You can track your order status on your account page. You will receive an email with your product details shortly after payment confirmation.</p>
             <button onClick={closeModal} className="w-full mt-4 bg-primary hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded-lg">

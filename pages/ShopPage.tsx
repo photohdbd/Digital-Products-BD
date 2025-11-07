@@ -48,33 +48,33 @@ const ShopPage: React.FC = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="bg-base-200 p-8 rounded-lg shadow-subtle text-center mb-12 border border-base-300">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900">Our Products</h1>
-        <p className="text-gray-500 mt-2">Find the perfect digital asset for your next project.</p>
+        <h1 className="text-4xl md:text-5xl font-bold text-white">Our Products</h1>
+        <p className="text-gray-400 mt-2">Find the perfect digital asset for your next project.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Filters */}
-        <aside className="lg:col-span-1 bg-base-100 p-6 rounded-lg shadow-subtle h-fit border border-base-300">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Filters</h2>
+        <aside className="lg:col-span-1 bg-base-200 p-6 rounded-lg shadow-subtle h-fit border border-base-300">
+          <h2 className="text-2xl font-bold text-white mb-6">Filters</h2>
           <div className="mb-6">
-            <label htmlFor="search" className="block text-gray-800 mb-2 font-semibold">Search</label>
+            <label htmlFor="search" className="block text-gray-200 mb-2 font-semibold">Search</label>
             <input
               type="text"
               id="search"
               placeholder="Search products..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-base-200 border border-base-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full bg-base-300 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-3">Category</h3>
+            <h3 className="text-lg font-semibold text-white mb-3">Category</h3>
             <div className="space-y-2">
               {categories.map(cat => (
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`w-full text-left px-3 py-2 rounded-md transition-colors duration-200 ${selectedCategory === cat ? 'bg-primary text-white' : 'hover:bg-base-200 text-gray-600'}`}
+                  className={`w-full text-left px-3 py-2 rounded-md transition-colors duration-200 ${selectedCategory === cat ? 'bg-primary text-white' : 'hover:bg-base-300 text-gray-300'}`}
                 >
                   {cat}
                 </button>
@@ -82,12 +82,12 @@ const ShopPage: React.FC = () => {
             </div>
           </div>
           <div>
-            <label htmlFor="sort" className="block text-gray-800 mb-2 font-semibold">Sort By</label>
+            <label htmlFor="sort" className="block text-gray-200 mb-2 font-semibold">Sort By</label>
             <select
               id="sort"
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="w-full bg-base-200 border border-base-300 rounded-md py-2 px-3 text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full bg-base-300 border border-gray-600 rounded-md py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-primary"
             >
               <option value="featured">Featured</option>
               <option value="price-asc">Price: Low to High</option>
@@ -107,8 +107,8 @@ const ShopPage: React.FC = () => {
                 </div>
             ) : (
                 <div className="text-center bg-base-200 p-12 rounded-xl shadow-lg">
-                    <h2 className="text-2xl text-gray-700">No products found.</h2>
-                    <p className="text-gray-500 mt-2">Try adjusting your filters.</p>
+                    <h2 className="text-2xl text-gray-300">No products found.</h2>
+                    <p className="text-gray-400 mt-2">Try adjusting your filters.</p>
                 </div>
             )}
         </main>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import { AppContext } from '../context/AppContext';
@@ -6,47 +6,66 @@ import { MOCK_REVIEWS } from '../constants';
 import HeroSlider from '../components/HeroSlider';
 
 const Feature: React.FC<{ icon: React.ReactNode; title: string; }> = ({ icon, title }) => (
-    <div className="bg-base-100 p-4 rounded-lg shadow-subtle text-center border border-base-300 flex items-center justify-center space-x-3">
+    <div className="bg-base-200 p-4 rounded-lg shadow-subtle text-center border border-base-300 flex items-center justify-center space-x-3">
         <div className="flex-shrink-0 text-primary">
             {icon}
         </div>
-        <h3 className="text-md font-bold text-gray-700">{title}</h3>
+        <h3 className="text-md font-bold text-gray-300">{title}</h3>
     </div>
 );
 
-const SpecialOfferCard: React.FC<{title: string, subtitle: string}> = ({title, subtitle}) => (
-    <div className="bg-base-100 p-6 rounded-lg shadow-subtle border border-base-300 text-center transition-all duration-300 hover:shadow-lifted hover:-translate-y-1">
-        <h3 className="text-xl font-bold text-gray-800">{title}</h3>
-        <p className="text-gray-500 mt-1">{subtitle}</p>
-    </div>
+const SpecialOfferCard: React.FC<{title: string, subtitle: string, image: string, link: string}> = ({title, subtitle, image, link}) => (
+    <Link to={link} className="block group bg-base-200 p-4 rounded-lg shadow-subtle border border-base-300 text-center transition-all duration-300 hover:shadow-lifted hover:-translate-y-1 hover:border-primary">
+        <img src={image} alt={title} className="w-full h-32 object-contain mx-auto mb-4"/>
+        <h3 className="text-xl font-bold text-white group-hover:text-primary">{title}</h3>
+        <p className="text-gray-400 mt-1 text-sm">{subtitle}</p>
+    </Link>
 )
+
+const ReviewCard: React.FC<{review: typeof MOCK_REVIEWS[0]}> = ({ review }) => (
+    <div className="bg-base-200 p-6 rounded-lg shadow-subtle border border-base-300 w-full flex-shrink-0">
+        <div className="flex items-center mb-4">
+            <img src={review.avatarUrl} alt={review.name} className="w-14 h-14 rounded-full mr-4" />
+            <div>
+                <h4 className="font-bold text-white text-lg">{review.name}</h4>
+                <p className="text-sm text-primary font-semibold">{review.title}</p>
+            </div>
+        </div>
+        <p className="text-gray-300">"{review.comment}"</p>
+    </div>
+);
 
 const HomePage: React.FC = () => {
     const context = useContext(AppContext);
+    const [currentReview, setCurrentReview] = useState(0);
+
+     useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentReview((prev) => (prev === MOCK_REVIEWS.length - 1 ? 0 : prev + 1));
+        }, 5000);
+        return () => clearInterval(timer);
+    }, []);
+
     if (!context) return null;
 
-    const { products } = context;
+    const { products, specialOffers } = context;
     const liveProducts = products.filter(p => p.isLive);
     const featuredProducts = liveProducts.slice(0, 8);
 
     return (
         <div className="space-y-12 md:space-y-20 pb-16">
-            {/* Hero Slider */}
             <HeroSlider />
 
             <div className="container mx-auto px-6 space-y-20">
-                {/* Special Offer */}
-                 <section>
-                    <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8">Special Offer</h2>
-                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <SpecialOfferCard title="ইউটিউব প্রিমিয়াম" subtitle="Quietest Premium Price in BD"/>
-                        <SpecialOfferCard title="কুইলবট প্রিমিয়াম" subtitle="Quillbot Premium Price in BD"/>
-                        <SpecialOfferCard title="পিক্সিফাইট এআই" subtitle="Pixifiy AI Pro"/>
-                        <SpecialOfferCard title="হিক্স এআই" subtitle="Hix AI Price in BD"/>
-                    </div>
-                </section>
+                {specialOffers.length > 0 && (
+                     <section>
+                        <h2 className="text-2xl md:text-3xl font-bold text-center text-white mb-8">Special Offer</h2>
+                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {specialOffers.map(offer => <SpecialOfferCard key={offer.id} {...offer} />)}
+                        </div>
+                    </section>
+                )}
                 
-                {/* Features Section */}
                 <section className="grid grid-cols-2 md:grid-cols-4 gap-6">
                     <Feature 
                         icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>}
@@ -66,48 +85,49 @@ const HomePage: React.FC = () => {
                     />
                 </section>
 
-
-                {/* Featured Products */}
                 <section>
-                    <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8">Featured Products</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold text-center text-white mb-8">Featured Products</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                         {featuredProducts.map(product => <ProductCard key={product.id} product={product} />)}
                     </div>
                 </section>
                 
-                 {/* How to buy */}
                 <section>
-                    <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8">How to buy</h2>
-                    <div className="max-w-4xl mx-auto bg-black rounded-lg shadow-lifted h-80 flex items-center justify-center">
-                        <p className="text-white text-2xl">Video Player Placeholder</p>
+                    <h2 className="text-2xl md:text-3xl font-bold text-center text-white mb-8">How to Buy</h2>
+                    <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+                        <div className="bg-base-200 p-6 rounded-lg">
+                            <div className="text-4xl text-primary mb-2">①</div>
+                            <h3 className="font-bold text-white">Select Product</h3>
+                            <p className="text-sm text-gray-400">Browse our shop and choose the product you need.</p>
+                        </div>
+                         <div className="bg-base-200 p-6 rounded-lg">
+                            <div className="text-4xl text-primary mb-2">②</div>
+                            <h3 className="font-bold text-white">Add to Cart</h3>
+                            <p className="text-sm text-gray-400">Add the product to your cart and proceed to checkout.</p>
+                        </div>
+                         <div className="bg-base-200 p-6 rounded-lg">
+                            <div className="text-4xl text-primary mb-2">③</div>
+                            <h3 className="font-bold text-white">Make Payment</h3>
+                            <p className="text-sm text-gray-400">Pay using bKash, Nagad, or Rocket and provide the TxID.</p>
+                        </div>
+                         <div className="bg-base-200 p-6 rounded-lg">
+                            <div className="text-4xl text-primary mb-2">④</div>
+                            <h3 className="font-bold text-white">Receive Product</h3>
+                            <p className="text-sm text-gray-400">Get your digital product delivered to your email instantly.</p>
+                        </div>
                     </div>
                 </section>
 
-                {/* Testimonials Section */}
                 <section>
-                    <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-8">Reviews</h2>
-                    <p className="text-center text-gray-500 mb-12 -mt-4">What our clients say about us?</p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                        {MOCK_REVIEWS.slice(0, 2).map(review => (
-                            <div key={review.id} className="bg-base-100 p-6 rounded-lg shadow-subtle border border-base-300">
-                                <div className="flex items-center mb-4">
-                                    <img src={review.avatarUrl} alt={review.name} className="w-14 h-14 rounded-full mr-4" />
-                                    <div>
-                                        <h4 className="font-bold text-gray-800 text-lg">{review.name}</h4>
-                                        <p className="text-sm text-primary font-semibold">{review.title}</p>
-                                    </div>
-                                </div>
-                                <p className="text-gray-600">"{review.comment}"</p>
-                            </div>
-                        ))}
+                    <h2 className="text-2xl md:text-3xl font-bold text-center text-white mb-8">Reviews</h2>
+                    <p className="text-center text-gray-400 mb-12 -mt-4">What our clients say about us?</p>
+                    <div className="max-w-xl mx-auto relative h-52">
+                         {MOCK_REVIEWS.map((review, index) => (
+                             <div key={review.id} className={`absolute w-full transition-opacity duration-500 ease-in-out ${index === currentReview ? 'opacity-100' : 'opacity-0'}`}>
+                                <ReviewCard review={review} />
+                             </div>
+                         ))}
                     </div>
-                </section>
-                
-                 {/* Hostinger Ad */}
-                 <section className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-12 rounded-lg text-center">
-                    <h2 className="text-3xl font-bold">We recommend Hostinger</h2>
-                    <p className="mt-2">Hostinger was among the the fastest web hosting services, and the best price on the planet.</p>
-                    <a href="#" className="mt-6 inline-block bg-accent hover:bg-opacity-90 text-gray-900 font-bold py-3 px-8 rounded-lg">Get Offer</a>
                 </section>
 
             </div>

@@ -9,10 +9,10 @@ const FaqItem: React.FC<{ question: string; children: React.ReactNode }> = ({ qu
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex justify-between items-center text-left py-4"
       >
-        <span className="text-lg font-semibold text-gray-800">{question}</span>
+        <span className="text-lg font-semibold text-white">{question}</span>
         <span className="text-primary text-2xl">{isOpen ? '-' : '+'}</span>
       </button>
-      {isOpen && <div className="pb-4 text-gray-600">{children}</div>}
+      {isOpen && <div className="pb-4 text-gray-300">{children}</div>}
     </div>
   );
 };
@@ -20,8 +20,8 @@ const FaqItem: React.FC<{ question: string; children: React.ReactNode }> = ({ qu
 const FAQPage: React.FC = () => {
   return (
     <div className="container mx-auto px-6 py-12 max-w-4xl">
-      <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h1>
-      <div className="bg-base-100 p-8 rounded-2xl shadow-lifted border border-base-300">
+      <h1 className="text-4xl font-bold text-white mb-8 text-center">Frequently Asked Questions</h1>
+      <div className="bg-base-200 p-8 rounded-2xl shadow-lifted border border-base-300">
         <FaqItem question="How will I receive my product after purchase?">
           <p>
             All our products are delivered digitally. After your payment is confirmed, you will receive an email containing your product details, such as license keys, account information, or download links. This is usually done within 5-30 minutes of payment confirmation.
@@ -44,7 +44,7 @@ const FAQPage: React.FC = () => {
         </FaqItem>
         <FaqItem question="How can I contact customer support?">
           <p>
-            You can reach our customer support team through the contact form on our <Link to="/contact" className="text-primary underline">Contact Us</Link> page or by emailing us directly at support@digitalproductsbd.com. We are available from Saturday to Thursday, 10 AM to 8 PM.
+            You can reach our customer support team through the contact form on our <Link to="/contact" className="text-primary underline">Contact Us</Link> page or by emailing us directly at support@digibd.com. We are available from Saturday to Thursday, 10 AM to 8 PM.
           </p>
         </FaqItem>
       </div>

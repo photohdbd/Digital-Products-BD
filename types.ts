@@ -62,6 +62,7 @@ export interface User {
     id: string;
     name: string;
     email: string;
+    password?: string;
 }
 
 export interface ContactMessage {
@@ -79,4 +80,12 @@ export interface Review {
     comment: string;
     rating: number;
     avatarUrl: string;
+}
+
+export interface SpecialOffer {
+    id: string;
+    title: string;
+    subtitle: string;
+    image: string;
+    link: string;
 }

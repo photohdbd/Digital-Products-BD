@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "echo \"Build not required, site is served statically from root.\""
+    "build": "echo 'No build step required for this static site.'"
   },
   "devDependencies": {}
 }

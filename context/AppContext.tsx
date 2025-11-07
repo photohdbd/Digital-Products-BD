@@ -2,6 +2,19 @@ import React, { createContext, useState, ReactNode, useEffect } from 'react';
 import { Product, CartItem, Order, OrderStatus, CustomerDetails, PaymentMethod, ContactMessage, User, SpecialOffer } from '../types';
 import { MOCK_PRODUCTS, MOCK_USERS, MOCK_SPECIAL_OFFERS } from '../constants';
 
+// Helper to get initial state from localStorage or use a default value
+const getInitialState = <T,>(key: string, defaultValue: T): T => {
+    try {
+        const storedValue = localStorage.getItem(key);
+        if (storedValue) {
+            return JSON.parse(storedValue);
+        }
+    } catch (error) {
+        console.error(`Error reading from localStorage for key "${key}":`, error);
+    }
+    return defaultValue;
+};
+
 interface AppContextType {
   products: Product[];
   cart: CartItem[];
@@ -39,16 +52,28 @@ interface AppContextType {
 export const AppContext = createContext<AppContextType | null>(null);
 
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [products, setProducts] = useState<Product[]>(MOCK_PRODUCTS);
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [wishlist, setWishlist] = useState<Product[]>([]);
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [messages, setMessages] = useState<ContactMessage[]>([]);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [recentlyViewed, setRecentlyViewed] = useState<Product[]>([]);
-  const [users, setUsers] = useState<User[]>(MOCK_USERS);
-  const [specialOffers, setSpecialOffers] = useState<SpecialOffer[]>(MOCK_SPECIAL_OFFERS);
+  const [products, setProducts] = useState<Product[]>(() => getInitialState('products', MOCK_PRODUCTS));
+  const [cart, setCart] = useState<CartItem[]>(() => getInitialState('cart', []));
+  const [wishlist, setWishlist] = useState<Product[]>(() => getInitialState('wishlist', []));
+  const [orders, setOrders] = useState<Order[]>(() => getInitialState('orders', []));
+  const [messages, setMessages] = useState<ContactMessage[]>(() => getInitialState('messages', []));
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => getInitialState('isAuthenticated', false));
+  const [currentUser, setCurrentUser] = useState<User | null>(() => getInitialState('currentUser', null));
+  const [recentlyViewed, setRecentlyViewed] = useState<Product[]>(() => getInitialState('recentlyViewed', []));
+  const [users, setUsers] = useState<User[]>(() => getInitialState('users', MOCK_USERS));
+  const [specialOffers, setSpecialOffers] = useState<SpecialOffer[]>(() => getInitialState('specialOffers', MOCK_SPECIAL_OFFERS));
+
+  // Effects to save state to localStorage whenever it changes
+  useEffect(() => { try { localStorage.setItem('products', JSON.stringify(products)); } catch (e) { console.error("Failed to save products", e) } }, [products]);
+  useEffect(() => { localStorage.setItem('cart', JSON.stringify(cart)); }, [cart]);
+  useEffect(() => { localStorage.setItem('wishlist', JSON.stringify(wishlist)); }, [wishlist]);
+  useEffect(() => { localStorage.setItem('orders', JSON.stringify(orders)); }, [orders]);
+  useEffect(() => { localStorage.setItem('messages', JSON.stringify(messages)); }, [messages]);
+  useEffect(() => { localStorage.setItem('isAuthenticated', JSON.stringify(isAuthenticated)); }, [isAuthenticated]);
+  useEffect(() => { localStorage.setItem('currentUser', JSON.stringify(currentUser)); }, [currentUser]);
+  useEffect(() => { localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed)); }, [recentlyViewed]);
+  useEffect(() => { localStorage.setItem('users', JSON.stringify(users)); }, [users]);
+  useEffect(() => { localStorage.setItem('specialOffers', JSON.stringify(specialOffers)); }, [specialOffers]);
 
   const addToCart = (product: Product, quantity: number, selectedPlan?: Product['plans'][0]) => {
     setCart(prevCart => {

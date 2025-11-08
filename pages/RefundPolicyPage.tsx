@@ -5,7 +5,7 @@ const RefundPolicyPage: React.FC = () => {
     <div className="container mx-auto px-6 py-12 max-w-4xl">
       <h1 className="text-4xl font-bold text-white mb-8">Refund Policy</h1>
       <div className="prose prose-lg text-gray-300 space-y-4 prose-headings:text-white prose-strong:text-white">
-        <p>Thank you for shopping at DigiBD.</p>
+        <p>Thank you for shopping at OlalaDOT.</p>
         <p>If, for any reason, You are not completely satisfied with a purchase We invite You to review our policy on refunds and returns.</p>
         
         <h2 className="text-2xl text-white">General Policy</h2>

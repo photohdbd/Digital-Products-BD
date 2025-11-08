@@ -44,7 +44,7 @@ const FAQPage: React.FC = () => {
         </FaqItem>
         <FaqItem question="How can I contact customer support?">
           <p>
-            You can reach our customer support team through the contact form on our <Link to="/contact" className="text-primary underline">Contact Us</Link> page or by emailing us directly at support@digibd.com. We are available from Saturday to Thursday, 10 AM to 8 PM.
+            You can reach our customer support team through the contact form on our <Link to="/contact" className="text-primary underline">Contact Us</Link> page or by emailing us directly at support@olaladot.com. We are available from Saturday to Thursday, 10 AM to 8 PM.
           </p>
         </FaqItem>
       </div>

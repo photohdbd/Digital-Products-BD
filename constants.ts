@@ -46,7 +46,7 @@ export const MOCK_PRODUCTS: Product[] = [
       "Product Overview": "An advanced AI tool for generating high-quality videos from text prompts. It's perfect for content creators, marketers, and professionals looking to create engaging visual content efficiently.",
       "Tools & Capabilities included": ["Text-to-cinematic video generation", "Studio - creative dev environment", "Whisk - structured task & agent orchestration"],
       "Who Should Use It?": ["Content creators", "Marketers & Advertisers", "Researchers, students & professionals"],
-      "Why Buy From DigiBD?": "Fast & transparent delivery, guaranteed authentic account, and dedicated support.",
+      "Why Buy From OlalaDOT?": "Fast & transparent delivery, guaranteed authentic account, and dedicated support.",
       "Frequently Asked Questions (FAQ)": "Is this a monthly subscription? - Yes. Do I receive credentials? - Yes, after payment.",
     }
   },
@@ -125,21 +125,21 @@ export const MOCK_CATEGORIES = [
 ];
 
 export const MOCK_REVIEWS: Review[] = [
-    { id: 'rev1', name: 'Ziaul Khan', title: 'Recommends DigiBD', comment: 'I always buy digital products from digibd, and I am blown away by your service.', rating: 5, avatarUrl: 'https://i.pravatar.cc/150?u=rev1' },
-    { id: 'rev2', name: 'Jannatul Nayeem', title: 'Recommends DigiBD', comment: 'I am your regular customer. Recommend them they are reliable.', rating: 5, avatarUrl: 'https://i.pravatar.cc/150?u=rev2' },
+    { id: 'rev1', name: 'Ziaul Khan', title: 'Recommends OlalaDOT', comment: 'I always buy digital products from olaladot, and I am blown away by your service.', rating: 5, avatarUrl: 'https://i.pravatar.cc/150?u=rev1' },
+    { id: 'rev2', name: 'Jannatul Nayeem', title: 'Recommends OlalaDOT', comment: 'I am your regular customer. Recommend them they are reliable.', rating: 5, avatarUrl: 'https://i.pravatar.cc/150?u=rev2' },
     { id: 'rev3', name: 'Kamal Hossain', title: 'Great Support', comment: 'I had a small issue and the support team was very helpful and resolved it quickly.', rating: 4, avatarUrl: 'https://i.pravatar.cc/150?u=rev3' },
     { id: 'rev4', name: 'আফরিন সুলতানা', title: 'খুবই ভালো সার্ভিস', comment: 'আমি সবসময় এখান থেকেই আমার প্রয়োজনীয় ডিজিটাল প্রোডাক্ট কিনি। ডেলিভারি খুব দ্রুত এবং সাপোর্টও চমৎকার।', rating: 5, avatarUrl: 'https://i.pravatar.cc/150?u=rev4' },
     { id: 'rev5', name: 'David Lee', title: 'Smooth Transaction', comment: 'The purchase process was incredibly smooth and I received my product key within minutes. Highly recommended!', rating: 5, avatarUrl: 'https://i.pravatar.cc/150?u=rev5' },
     { id: 'rev6', name: 'সাবরিনা চৌধুরী', title: 'নির্ভরযোগ্য একটি প্ল্যাটফর্ম', comment: 'ডিজিটাল প্রোডাক্ট কেনার জন্য এটি আমার প্রথম পছন্দ। তাদের সততা এবং দ্রুত ডেলিভারির জন্য আমি মুগ্ধ।', rating: 5, avatarUrl: 'https://i.pravatar.cc/150?u=rev6' },
     { id: 'rev7', name: 'Michael Chen', title: 'Excellent Customer Service', comment: 'Had a question about a product and their support team responded almost instantly. Very impressive service.', rating: 5, avatarUrl: 'https://i.pravatar.cc/150?u=rev7' },
-    { id: 'rev8', name: 'তানভীর আহমেদ', title: 'সেরা দাম', comment: 'অন্যান্য সাইটের তুলনায় এখানে দাম অনেক কম এবং প্রোডাক্টগুলো ১০০% আসল। ধন্যবাদ DigiBD!', rating: 4, avatarUrl: 'https://i.pravatar.cc/150?u=rev8' },
+    { id: 'rev8', name: 'তানভীর আহমেদ', title: 'সেরা দাম', comment: 'অন্যান্য সাইটের তুলনায় এখানে দাম অনেক কম এবং প্রোডাক্টগুলো ১০০% আসল। ধন্যবাদ OlalaDOT!', rating: 4, avatarUrl: 'https://i.pravatar.cc/150?u=rev8' },
     { id: 'rev9', name: 'Emily White', title: 'Will buy again!', comment: 'Found exactly what I was looking for. The website is easy to navigate. A+ experience.', rating: 5, avatarUrl: 'https://i.pravatar.cc/150?u=rev9' },
     { id: 'rev10', name: 'মোঃ রাশেদুল ইসলাম', title: 'আমার অভিজ্ঞতা', comment: 'প্রথমে একটু দ্বিধায় ছিলাম, কিন্তু প্রোডাক্ট হাতে পাওয়ার পর সব দ্বিধা দূর হয়ে গেছে। আপনারা সত্যিই প্রশংসার যোগ্য।', rating: 5, avatarUrl: 'https://i.pravatar.cc/150?u=rev10' },
     { id: 'rev11', name: 'Jessica Brown', title: 'Fantastic Selection', comment: 'They have a wide variety of digital tools that I couldn\'t find elsewhere. This is my new go-to site.', rating: 5, avatarUrl: 'https://i.pravatar.cc/150?u=rev11' },
     { id: 'rev12', name: 'ফারজানা হক', title: 'বিশ্বাসের সাথে কেনাকাটা', comment: 'আমি আমার বন্ধুদেরও এই সাইটটি রিকমেন্ড করেছি। তারা সবাই খুব খুশি।', rating: 5, avatarUrl: 'https://i.pravatar.cc/150?u=rev12' },
     { id: 'rev13', name: 'Chris Green', title: 'Quick and Easy', comment: 'From finding the product to checkout, everything was quick and easy. No hassle at all.', rating: 4, avatarUrl: 'https://i.pravatar.cc/150?u=rev13' },
     { id: 'rev14', name: 'নুসরাত জাহান', title: 'অসাধারণ সাপোর্ট', comment: 'আমার পেমেন্ট নিয়ে একটি সমস্যা হয়েছিল, কিন্তু তাদের সাপোর্ট টিম খুব দ্রুত সমাধান করে দিয়েছে।', rating: 5, avatarUrl: 'https://i.pravatar.cc/150?u=rev14' },
-    { id: 'rev15', name: 'Brian Miller', title: 'Legit and Reliable', comment: 'Got my software license instantly. It is legit and works perfectly. Thank you, DigiBD team!', rating: 5, avatarUrl: 'https://i.pravatar.cc/150?u=rev15' }
+    { id: 'rev15', name: 'Brian Miller', title: 'Legit and Reliable', comment: 'Got my software license instantly. It is legit and works perfectly. Thank you, OlalaDOT team!', rating: 5, avatarUrl: 'https://i.pravatar.cc/150?u=rev15' }
 ];
 
 export const MOCK_USERS: User[] = [

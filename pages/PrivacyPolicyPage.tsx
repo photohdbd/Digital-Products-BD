@@ -7,7 +7,7 @@ const PrivacyPolicyPage: React.FC = () => {
       <div className="prose prose-lg text-gray-300 space-y-4 prose-headings:text-white prose-strong:text-white">
         <p>Last updated: {new Date().toLocaleDateString()}</p>
         <p>
-          DigiBD ("us", "we", or "our") operates the DigiBD website (the "Service"). This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.
+          OlalaDOT ("us", "we", or "our") operates the OlalaDOT website (the "Service"). This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.
         </p>
         
         <h2 className="text-2xl text-white">Information Collection and Use</h2>
@@ -17,7 +17,7 @@ const PrivacyPolicyPage: React.FC = () => {
         
         <h2 className="text-2xl text-white">Use of Data</h2>
         <p>
-          DigiBD uses the collected data for various purposes:
+          OlalaDOT uses the collected data for various purposes:
         </p>
         <ul>
           <li>To provide and maintain the Service</li>

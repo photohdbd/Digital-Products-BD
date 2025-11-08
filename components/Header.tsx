@@ -24,7 +24,7 @@ const Header: React.FC = () => {
         <header className="bg-base-200/80 backdrop-blur-sm sticky top-0 z-50 shadow-subtle">
             <div className="container mx-auto px-6 py-4 flex justify-between items-center">
                 <Link to="/" className="text-4xl font-bold text-white tracking-wider">
-                    Digi<span className="text-primary">BD</span>
+                    Olala<span className="text-primary">DOT</span>
                 </Link>
 
                 <nav className="hidden lg:flex space-x-8 items-center">
